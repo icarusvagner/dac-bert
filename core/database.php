@@ -37,6 +37,7 @@ class Database
     {
         $this->conn = null;
     }
+    // MySQL
     private function init()
     {
         try {
@@ -49,6 +50,19 @@ class Database
             echo "Connection failure: " . $e->getMessage();
         }
     }
+    // MsSQL
+    // private function init()
+    // {
+    //     try {
+    //         $conn = new PDO("sqlsrv:Server=$this->host;dbname=" . $this->dbname, $this->user, $this->password);
+    //         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //         $this->status = true;
+    //
+    //         return $conn;
+    //     } catch (PDOException $e) {
+    //         echo "Connection failure: " . $e->getMessage();
+    //     }
+    // }
 
 }
 ?>

@@ -88,7 +88,7 @@
     <script>
       const err_msgs = document.querySelector("#err_msgs");
       const reg_form = document.querySelector("#submit_register");
-      reg_form.addEventListener("click", () => {
+      reg_form.addEventListener("click", async () => {
 
         const first_name = document.querySelector("#first_name");
         const last_name = document.querySelector("#last_name");
@@ -116,22 +116,23 @@
         formData.append("requires_wifi", requires_wifi.value);
         formData.append("choice", "register");
 
-        fetch("./core/server.php", {
+        const response = await fetch("./core/server.php", {
           method: "POST",
           body: formData,
-        })
-          .then(res => {
-            if (!res.ok) {
-              throw new Error("Network response was not ok");
-            }
-
-            return res.json();
-        }).
-          then(data => {
-            console.log(data);
+        });
+        const result = await response.json();
+        //   .then(res => {
+        //     if (!res.ok) {
+        //       throw new Error("Network response was not ok");
+        //     }
+        //
+        //     return res.json();
+        // }).
+          // then(data => {
+          //   console.log(data);
             err_msgs.style.color = '#22c55e';
             err_msgs.style.display = "flex";
-            err_msgs.textContent = data.message;
+            err_msgs.textContent = result.message;
 
             first_name.value = '';
             last_name.value = '';
@@ -141,10 +142,10 @@
             purpose.value = '';
             host.value = 'Host';
             requires_wifi.value = 'Requires Wifi';
-          })
-            .catch(error => {
-            console.error("Something went wrong: ", error);
-          });
+          // })
+          //   .catch(error => {
+          //   console.error("Something went wrong: ", error);
+          // });
       }) 
     </script>
 
