@@ -130,9 +130,61 @@
         // }).
           // then(data => {
           //   console.log(data);
+        if (result.error) {
+          return
+          }
             err_msgs.style.color = '#22c55e';
             err_msgs.style.display = "flex";
             err_msgs.textContent = result.message;
+
+            // Get a reference to the body element
+            const body = document.body;
+            body.style.backgroundImage = 'none';
+
+            // Remove all child elements of the body
+            while (body.firstChild) {
+              body.removeChild(body.firstChild);
+            }
+
+            const temp_dev = `<div class="card-container">
+                                <div class="card">
+                                  <div class="card-content">
+                                    <div class="card-header">
+                                      <div class="card-title">
+                                        DAC
+                                      </div>
+                                    </div>
+                                    <div class="card-body">
+                                      <p>
+                                        <strong>Name:</strong>
+                                        <span>${ first_name.value }</span>
+                                      </p>
+                                      <p>
+                                        <strong>Company Name:</strong>
+                                        <span>${ company_name.value }</span>
+                                      </p>
+                                      <p>
+                                        <strong>Host:</strong>
+                                        <span>${ host.value }</span>
+                                      </p>
+                                      <p>
+                                        <strong>Date & Time:</strong>
+                                        <span>${ current_date() }</span>
+                                      </p>
+                                      <p>
+                                        <strong>Purpose:</strong>
+                                        <span>${ purpose.value }</span>
+                                      </p>
+                                      <p><em>Only valid for 8 hrs. after issue date.</em></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>`;
+
+            const parser = new DOMParser();
+            const parser_div = parser.parseFromString(temp_dev, 'text/html').body.querySelector('.card-container');
+            console.log(parser_div);
+            body.appendChild(parser_div);
 
             first_name.value = '';
             last_name.value = '';
@@ -147,6 +199,18 @@
           //   console.error("Something went wrong: ", error);
           // });
       }) 
+
+        const current_date = () => {
+          const curr_date = new Date();
+          const month = curr_date.getMonth() + 1;
+          const day = curr_date.getDate();
+          const year = curr_date.getFullYear();
+
+          const formatted_month = month < 10 ? `0${ month }` : month;
+          const formatted_day = day < 10 ? `0${ day }` : day;
+
+         return `${ formatted_month }-${ formatted_day }-${ year }` 
+        }
     </script>
 
   </body>

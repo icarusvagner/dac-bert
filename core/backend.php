@@ -12,16 +12,16 @@ class backend {
       if ($db->getStatus()) {
         $stmt = $db->getConnection()->prepare($query->RegisterQuery());
         $stmt->execute(array($firstname, $lastname, $birthdate, $address, $company_name, $purpose, $host, $requires_wifi));
-        $res = $stmt->fetch(PDO::FETCH_ASSOC);
-        $tes = "Register resut: ". $res;
-        error_log($tes);
-        if (!$res) {
+        // $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        // $tes = "Register resut: ". $res;
+        // error_log($tes);
+        // if (!$res) {
           $db->closeConnection();
           return json_encode(['status' => 201, 'message' => 'Successfully register']);
-        } else {
-          $db->closeConnection();
-          return json_encode(['status' => 403]);
-        }
+        // } else {
+        //   $db->closeConnection();
+        //   return json_encode(['status' => 403]);
+        // }
       } else {
         return json_encode(['status' => 403]);
       }

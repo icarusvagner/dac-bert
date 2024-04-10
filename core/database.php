@@ -38,23 +38,10 @@ class Database
         $this->conn = null;
     }
     // MySQL
-    private function init()
-    {
-        try {
-            $conn = new PDO("mysql:host=$this->host;dbname=" . $this->dbname, $this->user, $this->password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->status = true;
-
-            return $conn;
-        } catch (PDOException $e) {
-            echo "Connection failure: " . $e->getMessage();
-        }
-    }
-    // MsSQL
     // private function init()
     // {
     //     try {
-    //         $conn = new PDO("sqlsrv:Server=$this->host;dbname=" . $this->dbname, $this->user, $this->password);
+    //         $conn = new PDO("mysql:host=$this->host;dbname=" . $this->dbname, $this->user, $this->password);
     //         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //         $this->status = true;
     //
@@ -63,6 +50,19 @@ class Database
     //         echo "Connection failure: " . $e->getMessage();
     //     }
     // }
+    // MsSQL
+     private function init()
+    {
+        try {
+            // Connect to SQL Server
+            $conn = new PDO("sqlsrv:Server=$this->host;Database=$this->dbname", $this->user, $this->password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->status = true;
 
+            return $conn;
+        } catch (PDOException $e) {
+            echo "Connection failure: " . $e->getMessage();
+        }
+    }
 }
 ?>
